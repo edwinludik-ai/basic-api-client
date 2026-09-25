@@ -14,7 +14,11 @@ Reads config from environment variables:
 
 import os
 
+from dotenv import load_dotenv
+
 from basic_api_client import build_authorization_url
+
+load_dotenv()
 
 scope = os.environ.get("OAUTH_SCOPE")
 
