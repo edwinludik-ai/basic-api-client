@@ -94,6 +94,19 @@ Reads:
 go test ./...
 ```
 
+## Editor support (gopls)
+
+`golang.org/x/tools/gopls` is declared as a project tool (see the
+`tool` directive in `go.mod`) and vendored alongside the regular
+dependencies, so it also builds and runs with no network access:
+
+```
+go tool gopls version
+```
+
+Point your editor's Go extension at that command instead of a
+separately-installed `gopls`.
+
 ## License
 
 BSD Zero Clause License (0BSD) -- see [LICENSE](LICENSE). No conditions
