@@ -6,6 +6,19 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from requests_oauthlib import OAuth2Session
 
 
+def build_authorization_url(authorization_url, client_id, redirect_port=8765, scope=None):
+    """Build the URL a user visits to log in and approve access.
+
+    Useful to run on its own: open the URL in a browser, approve, and see
+    where the provider actually redirects to afterward. That reveals its
+    registered redirect URI, even without dashboard access.
+    """
+    redirect_uri = f"http://localhost:{redirect_port}/callback"
+    session = OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scope)
+    auth_url, _state = session.authorization_url(authorization_url)
+    return auth_url
+
+
 def authenticate(authorization_url, token_url, client_id, client_secret=None, scope=None, redirect_port=8765):
     """Log in via the OAuth2 authorization code flow.
 

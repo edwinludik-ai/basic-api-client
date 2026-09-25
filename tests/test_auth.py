@@ -3,7 +3,19 @@ from unittest.mock import patch
 
 from requests_oauthlib import OAuth2Session
 
-from basic_api_client import authenticate
+from basic_api_client import authenticate, build_authorization_url
+
+
+class BuildAuthorizationUrlTests(unittest.TestCase):
+    def test_includes_client_id_and_redirect_uri(self):
+        url = build_authorization_url(
+            authorization_url="https://provider.example.com/oauth/authorize",
+            client_id="my-client-id",
+            redirect_port=9999,
+        )
+
+        self.assertIn("client_id=my-client-id", url)
+        self.assertIn("redirect_uri=http%3A%2F%2Flocalhost%3A9999%2Fcallback", url)
 
 
 class AuthenticateTests(unittest.TestCase):
