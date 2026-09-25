@@ -88,6 +88,26 @@ Reads:
 | `OAUTH_REDIRECT_URI` | yes | Your OAuth2 client's registered redirect URI |
 | `OAUTH_SCOPE` | no | Space-separated scope names |
 
+### cmd/testapi
+
+Logs in via `Authenticate` and makes an authenticated GET request to a
+URL you give it, to check that login and the API both actually work
+end to end:
+
+```
+cp .env.example .env
+# fill in OAUTH_AUTHORIZATION_URL, OAUTH_TOKEN_URL, OAUTH_CLIENT_ID, OAUTH_REDIRECT_URI
+go run ./cmd/testapi https://api.example.com/some-endpoint
+```
+
+Prints the response status and body. Reads the same variables as
+`printauthurl`, plus:
+
+| Variable | Required | Description |
+|---|---|---|
+| `OAUTH_TOKEN_URL` | yes | The provider's OAuth2 token endpoint |
+| `OAUTH_CLIENT_SECRET` | no | Your OAuth2 client secret, if it has one |
+
 ## Testing
 
 ```
