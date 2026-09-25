@@ -96,4 +96,6 @@ go test ./...
 
 ## License
 
-MIT -- see [LICENSE](LICENSE).
+BSD Zero Clause License (0BSD) -- see [LICENSE](LICENSE). No conditions
+at all: use, copy, modify, and distribute for any purpose, without even
+needing to retain the copyright/license notice in copies.
