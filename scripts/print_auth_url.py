@@ -4,28 +4,23 @@
 Run this to discover a provider's registered redirect URI before wiring up
 authenticate(): open the printed URL yourself, log in/approve (or let it
 auto-redirect), and see exactly where it lands.
+
+Reads config from environment variables:
+    OAUTH_AUTHORIZATION_URL  (required) the provider's OAuth2 authorization endpoint
+    OAUTH_CLIENT_ID          (required) your OAuth2 client ID
+    OAUTH_REDIRECT_PORT      (optional) default: 8765
+    OAUTH_SCOPE              (optional) space-separated scope names
 """
 
-import argparse
+import os
 
 from basic_api_client import build_authorization_url
 
+scope = os.environ.get("OAUTH_SCOPE")
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("authorization_url", help="The provider's OAuth2 authorization endpoint")
-    parser.add_argument("client_id", help="Your OAuth2 client ID")
-    parser.add_argument("--redirect-port", type=int, default=8765, help="Default: 8765")
-    parser.add_argument("--scope", nargs="*", default=None, help="One or more scope names")
-    args = parser.parse_args()
-
-    print(build_authorization_url(
-        authorization_url=args.authorization_url,
-        client_id=args.client_id,
-        redirect_port=args.redirect_port,
-        scope=args.scope,
-    ))
-
-
-if __name__ == "__main__":
-    main()
+print(build_authorization_url(
+    authorization_url=os.environ["OAUTH_AUTHORIZATION_URL"],
+    client_id=os.environ["OAUTH_CLIENT_ID"],
+    redirect_port=int(os.environ.get("OAUTH_REDIRECT_PORT", 8765)),
+    scope=scope.split() if scope else None,
+))
